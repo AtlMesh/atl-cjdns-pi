@@ -1,6 +1,6 @@
 # atl-cjdns-pi
 
-
+<h1><a href="https://www.atlmesh.com">www.AtlMesh.com</a></h1>
 
 The following instructions will help you set up an encrypted mesh network on Raspberry Pi's. It takes about 15 minutes to set up a node with the Pi 3. Obviously, to have a mesh you will need more than one node. 
 
@@ -35,6 +35,7 @@ Many models of Orange Pi hardware running [Armbian](https://www.armbian.com/) ar
     ```
     $ wget https://raw.githubusercontent.com/AtlMesh/atl-cjdns-pi/master/setup && chmod +x setup && ./setup
     ```
+    For help with installation or other inquires, you can find us on our chat room at <a href="https://www.atlmesh.com/chat">www.AtlMesh.com/chat</a>
     
     The installation script can also install many optional features such as distributed applications and network analysis tools that are useful but non-essential to run a node.
 
