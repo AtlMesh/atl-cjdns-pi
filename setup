@@ -1,0 +1,105 @@
+#!/bin/bash
+#Filename: Node Installer
+#Author: soC
+#Date: 01.08.18
+#PATH=$PATH:scripts/
+#export PATH
+#chmod +x scripts/install && chmod +x scripts/install2 && chmod +x scripts/status
+
+set -e
+
+# Use provided repository or default to AtlMesh/atl-cjdns-pi
+if [ -z "$GIT_ATL_CJDNS_PI" ]; then
+    GIT_ATL_CJDNS_PI="https://github.com/AtlMesh/atl-cjdns-pi.git"
+fi
+
+# Use provided tag or default to master
+if [ -z "$TAG_ATL_CJDNS_PI" ]; then
+    TAG_ATL_CJDNS_PI=master
+fi
+
+if ! [ -z "`ps xa | awk '{print $5}' | grep dpkg | grep -v grep`" ]; then 
+	echo -e "\e[1;31mDPKG is running in the background.\e[0m"
+	read -p "Would you like to KILL it to continue (Y/n)? " -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Nn]$ ]]; then
+        echo -e "\e[1;31mPlease stop DPKG Before Proceeding!\e[0m"
+        exit
+    else	
+        echo -e "\e[1;32mKilling DPKG and continuing\e[0m"
+        sudo killall dpkg
+    fi	 
+fi
+
+# Get git
+sudo apt-get update
+if ! [ "$(which git)" ]; then
+    sudo apt-get install git -y
+fi
+
+# Download atl-cjdns-pi repo
+if ! [ -d "atl-cjdns-pi" ]; then
+    git clone $GIT_ATL_CJDNS_PI
+fi
+cd atl-cjdns-pi/scripts
+git checkout $TAG_ATL_CJDNS_PI
+
+# Export environment variables
+export WITH_MESH_POINT
+export WITH_WIFI_AP
+export WITH_IPFS
+export WITH_PROMETHEUS_NODE_EXPORTER
+export WITH_PROMETHEUS_SERVER
+export WITH_GRAFANA
+export WITH_EXTRA_TOOLS
+
+clear
+#Main menu is called to screen
+
+
+echo "          _   _   __  __           _       _   _      _   "
+echo "     /\  | | | | |  \/  |         | |     | \ | |    | |  "
+echo "    /  \ | |_| | | \  / | ___  ___| |__   |  \| | ___| |_ "
+echo "   / /\ \| __| | | |\/| |/ _ \/ __| '_ \  |     |/ _ \ __|"
+echo "  / ____ \ |_| | | |  | |  __/\__ \ | | | | |\  |  __/ |_ "
+echo " /_/    \_\__|_| |_|  |_|\___||___/_| |_| |_| \_|\___|\__|"
+
+printf "\n"
+printf "Node Installer\n"
+printf "\n"
+printf "1. Basic Install\n"
+printf "2. Install with all optional features\n"
+printf "3. Exit\n\n"
+	
+#user asked to choose from the options above
+read -p "::> " menuoption
+
+#will loop until a valid option is entered
+until [ $menuoption -ge 1 ] && [ $menuoption -le 3 ];
+do
+echo "Invalid number entered"
+read -p "Enter a number: " menuoption
+done
+
+# read the menuoption and call the corresponding case below
+case $menuoption in
+
+#clear the screen and call the method to do basic install
+1)
+	clear
+	./install2
+	;;
+
+#clear the screen and call the method to do install with all optional features
+2)
+	clear
+	WITH_MESH_POINT=true WITH_WIFI_AP=true WITH_IPFS=true WITH_PROMETHEUS_NODE_EXPORTER=true WITH_PROMETHEUS_SERVER=true WITH_GRAFANA=true WITH_H_DNS=true WITH_H_NTP=true WITH_FAKE_HWCLOCK=true WITH_EXTRA_TOOLS=true ./install2
+	;;
+
+#exit the application
+3)
+	clear
+	exit
+	;;
+
+esac
