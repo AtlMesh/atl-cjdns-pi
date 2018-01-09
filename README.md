@@ -33,7 +33,7 @@ Many models of Orange Pi hardware running [Armbian](https://www.armbian.com/) ar
 1. Run the following, then let the installation complete. After about 5 minutes the Pi will reboot:
 
     ```
-    $ wget https://raw.githubusercontent.com/AtlMesh/atl-cjdns-pi/master/ && chmod +x setup && ./setup
+    $ wget https://raw.githubusercontent.com/AtlMesh/atl-cjdns-pi/master/setup && chmod +x setup && ./setup
     ```
     
     The installation script can also install many optional features such as distributed applications and network analysis tools that are useful but non-essential to run a node.
