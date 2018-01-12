@@ -33,7 +33,7 @@ Many models of Orange Pi hardware running [Armbian](https://www.armbian.com/) ar
 1. Run the following, then let the installation complete. After about 5 minutes the Pi will reboot:
 
     ```
-    $ wget https://raw.githubusercontent.com/AtlMesh/atl-cjdns-pi/master/setup && chmod +x setup && ./setup
+    $ sudo wget https://raw.githubusercontent.com/AtlMesh/atl-cjdns-pi/master/setup && sudo chmod +x setup && sudo ./setup
     ```
     For help with installation or other inquires, you can find us on our chat room at <a href="https://www.atlmesh.com/chat">www.AtlMesh.com/chat</a>
     
